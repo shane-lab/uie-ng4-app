@@ -1,0 +1,20 @@
+<div id="web" class="item" *ngIf="item.type === 0">
+    <article>
+        <h3 [style.color]="primary">{{item.title}}</h3>
+        <small><a [style.color]="accent" [href]="item.source" target="_blank">{{item.source}}</a></small>
+        <p *ngIf="full">{{item.description}}</p>
+    </article>
+    <!--<ng-content class="wtf" [style.height]="height + 'px'"></ng-content>-->
+</div>
+<div id="video" class="item flex" *ngIf="item.type === 1">
+    <img [src]="item.thumbnail | safe" width="320px" height="240px" />
+    <div class="play-button-wrapper">
+        <div class="play-button"></div>
+    </div>
+</div>
+<div id="image" class="item flex" *ngIf="item.type === 2">
+    <img [src]="item.source | safe" width="320px" height="240px" />
+    <div class="dimensions-wrapper">
+        <label class="dimensions">{{item.width}}&nbsp; × &nbsp;{{item.height}}</label>
+    </div>
+</div>

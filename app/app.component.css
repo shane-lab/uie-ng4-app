@@ -1,0 +1,52 @@
+ec-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+
+.content {
+    position: fixed;
+    top: 280px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.content .left {
+    width: calc(60% - 60px);
+    height: calc(100% - 340px);
+    padding: 30px;
+    float: left;
+}
+
+.content .right {
+    width: calc(40% - 60px);
+    height: calc(100% - 340px);
+    padding: 30px;
+    float: left;
+}
+
+.boxed {
+    background: #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
+}
+
+.content .unmerged {
+    display: block;
+}
+.content .merged {
+    display: none;
+}
+
+@media screen and (max-width: 1066px) {
+    .content .unmerged {
+        display: none;
+    }
+    .content .merged {
+        display: block;
+    }
+}

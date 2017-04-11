@@ -1,0 +1,8 @@
+<tr class="tbodyTrRow" *ngFor="let aRow of dataService.getRows()">
+    <td class="column"
+        *ngFor="let aColumn of dataService.getColumns()"
+        [mdt-cell-align]="aColumn">
+
+        {{dataService.getCellData(aColumn, aRow).value}}
+    </td>
+</tr>

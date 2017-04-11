@@ -1,0 +1,30 @@
+<tr class="theadTrRow">
+    <th class="column"
+        *ngFor="let aColumn of dataService.getColumns()"
+        [mdt-cell-align]="aColumn"
+        [ngClass]="{'sortable-column': sortService.isSortingEnabled()}"
+        (click)="setColumnOrder(aColumn)">
+
+        <span *ngIf="sortService.isSortingEnabled() && aColumn.isRightAligned()">
+            <i class="material-icons md-16 mdt-sort-icon"
+               *ngIf="sortService.isSortedDescending()"
+               [ngClass]="{'mdt-sort-icon-active': sortService.isSortedByColumn(aColumn)}">arrow_upward</i>
+
+            <i class="material-icons md-16 mdt-sort-icon"
+               *ngIf="sortService.isSortedAscending()"
+               [ngClass]="{'mdt-sort-icon-active': sortService.isSortedByColumn(aColumn)}">arrow_downward</i>
+        </span>
+
+        {{aColumn.name}}
+
+        <span *ngIf="sortService.isSortingEnabled() && aColumn.isLeftAligned()">
+            <i class="material-icons md-16 mdt-sort-icon"
+               *ngIf="sortService.isSortedDescending()"
+               [ngClass]="{'mdt-sort-icon-active': sortService.isSortedByColumn(aColumn)}">arrow_upward</i>
+
+            <i class="material-icons md-16 mdt-sort-icon"
+               *ngIf="sortService.isSortedAscending()"
+               [ngClass]="{'mdt-sort-icon-active': sortService.isSortedByColumn(aColumn)}">arrow_downward</i>
+        </span>
+    </th>
+</tr>

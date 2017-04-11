@@ -1,0 +1,31 @@
+<div class="mdt-footer layout-row" *ngIf="isEnabled()">
+    <div class="mdt-pagination layout-align-end-center layout-row flex">
+        <span class="layout-margin" style="margin-right:40px;">Rows per page:</span>
+
+        <select 
+                (input)="setPageSize($event.target.value)">
+                    <option *ngFor="let pageSize of tableFooter.pagination.rowsPerPage"
+                            value="{{pageSize}}">
+                        {{pageSize}}
+                    </option>
+        </select>
+
+        <span class="layout-margin" style="margin-right:32px;margin-left:32px;">
+            {{arrayPaginationService.getStartIndex()+1}} - {{arrayPaginationService.getStartIndex() + arrayPaginationService.itemsPerPage}}
+            of {{arrayPaginationService.totalRowsCount}}
+        </span>
+
+        <!-- todo: use md-icon -->
+        <div style="margin-right:14px;">
+            <i class="material-icons"
+               style="margin-right:24px;cursor: pointer;"
+               [ngClass]="isPreviousButtonDisabled()"
+               (click)="previousPage()">keyboard_arrow_left</i>
+
+            <i class="material-icons"
+               style="cursor:pointer;"
+               (click)="nextPage()"
+               [ngClass]="isNextButtonDisabled()">keyboard_arrow_right</i>
+        </div>
+    </div>
+</div>

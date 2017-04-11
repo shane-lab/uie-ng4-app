@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html class="unselectable">
+
+<head>
+  <title>📰 Editorial Cockpit</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=.9">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link href="assets/indigo-pink.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/squeezebox/styles.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    if (window.alert !== undefined) {
+      window.alert = console.log || function() { };
+      if (alert !== undefined) {
+        alert = window.alert;
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <!-- source: http://codepen.io/jonathansilva/pen/GhkAI?editors=1100 -->
+  <div id="preloader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #eee; z-index: 9999999;">
+    <div class="preloader-wrapper">
+      <div class="preloader">
+        <div class="roller"></div>
+        <div class="roller"></div>
+      </div>
+
+      <div id="preloader2" class="preloader">
+        <div class="roller"></div>
+        <div class="roller"></div>
+      </div>
+
+      <div id="preloader3" class="preloader">
+        <div class="roller"></div>
+        <div class="roller"></div>
+      </div>
+    </div>
+  </div>
+
+  <my-root>Loading...</my-root>
+  <!-- build:vendor -->
+  <script src="node_modules/systemjs/dist/system.src.js"></script>
+  <script src="systemjs.config.js"></script>
+  <!-- endbuild -->
+
+  <!-- build:app -->
+  <script>
+    System.import('app/vendor').then(function () {
+      System.import('app').catch(function (err) {
+        console.error(err);
+      });
+    });
+  </script>
+  <!-- endbuild -->
+</body>
+
+</html>

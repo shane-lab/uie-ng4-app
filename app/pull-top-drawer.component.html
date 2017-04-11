@@ -1,0 +1,237 @@
+<div #banner class="banner">
+    <span><img class="logo" src="https://ui.rickpeters.xyz/wp-content/uploads/2017/02/Logomakr_6BtMuG.png" height="50px" alt="Shane's Groep">Editorial Cockpit</span>
+</div>
+<div class="wrapper" [ngStyle]="{height: height + 'px', minHeight: minHeight + 'px'}">
+    <div style="width: 100%;" [ngStyle]="{ display: open ? 'inherit' : 'none' }">
+        <div id="search" class="fluid">
+            <form class="example-form">
+                <md-input-container dividerColor="primary">
+                    <md-icon style="float: right">search</md-icon>
+                    <input mdInput placeholder="Enter search query" value="Agile project">
+                </md-input-container>
+                <squeezebox>
+                    <sb-item [collapsed]="false">
+                        <sb-item-head><span style="color: #3f51b5 !important">Select search engines</span></sb-item-head>
+                        <sb-item-body>
+                            <md-list>
+                                <md-list-item *ngFor="let engine of engines; let i = index">
+                                    <md-checkbox color="primary" [(ngModel)]="engine.enabled"  [name]="engine.name" >{{engine.name}}</md-checkbox>
+                                </md-list-item>
+                            </md-list>
+                        </sb-item-body>
+                    </sb-item>
+                </squeezebox>
+                <p *ngIf="hasEngines()" style="margin-top: 30px">Set vertical-search options:
+                    <questionable answer="A vertical-search engine, unlike a generic web search engine which executes basic queries like your everyday use of Google search, focuses on a specific segment of online content. When using one or more of the options below, you're able to filter unwanted search results."
+                        title="'Vertical Search'" color="#3f51b5"></questionable>
+                </p>
+                <squeezebox>
+                    <sb-item *ngIf="engines[0].enabled">
+                        <sb-item-head><span style="color: #3f51b5 !important">Google Web search options</span></sb-item-head>
+                        <sb-item-body>
+                            <md-list>
+                                <md-list-item>
+                                    <md-select placeholder="Select language restriction" style="width: 100%">
+                                        <md-option *ngFor="let language of googleLanguages" [value]="language"> {{ language.name }} </md-option>
+                                    </md-select>
+                                </md-list-item>
+                                <md-list-item>
+                                    <md-input-container dividerColor="primary">
+                                        <input mdInput placeholder="Include a word or a phrase">
+                                    </md-input-container>
+                                </md-list-item>
+                                <md-list-item>
+                                    <md-input-container dividerColor="primary">
+                                        <input mdInput placeholder="Exclude a word or a phrase">
+                                    </md-input-container>
+                                </md-list-item>
+                            </md-list>
+                        </sb-item-body>
+                    </sb-item>
+                    <sb-item *ngIf="engines[0].enabled">
+                        <sb-item-head><span style="color: #3f51b5 !important">Google Image search options</span></sb-item-head>
+                        <sb-item-body>
+                            <md-list>
+                                <md-list-item>
+                                    <md-select placeholder="Select a color type" style="width: 100%">
+                                        <md-option *ngFor="let type of googleColorTypes" [value]="type"> {{ type.name }} </md-option>
+                                    </md-select>
+                                </md-list-item>
+                                <md-list-item>
+                                    <md-select placeholder="Select a size format" style="width: 100%">
+                                        <md-option *ngFor="let size of googleSizeFormats" [value]="size"> {{ size.name }} </md-option>
+                                    </md-select>
+                                </md-list-item>
+                                <md-list-item>
+                                    <md-select placeholder="Select a dominant color" style="width: 100%">
+                                        <md-option *ngFor="let color of googleColors" [value]="color"> {{ color.name }} </md-option>
+                                    </md-select>
+                                </md-list-item>
+                            </md-list>
+                        </sb-item-body>
+                    </sb-item>
+                    <sb-item *ngIf="engines[1].enabled">
+                        <sb-item-head><span style="color: #3f51b5 !important">Flickr Image search options</span></sb-item-head>
+                        <sb-item-body>
+                            <md-list>
+                                <md-list-item>
+                                    <md-select placeholder="Select an orientation" style="width: 100%">
+                                        <md-option *ngFor="let orientation of flickrOrientations" [value]="orientation"> {{ orientation.name }} </md-option>
+                                    </md-select>
+                                </md-list-item>
+                            </md-list>
+                        </sb-item-body>
+                    </sb-item>
+                    <sb-item *ngIf="engines[2].enabled">
+                        <sb-item-head><span style="color: #3f51b5 !important">Pixabay Image search options</span></sb-item-head>
+                        <sb-item-body>
+                            <md-list>
+                                <md-list-item>
+                                    <md-select placeholder="Select an orientation" style="width: 100%">
+                                        <md-option *ngFor="let orientation of pixabayOrientations" [value]="orientation"> {{ orientation.name }} </md-option>
+                                    </md-select>
+                                </md-list-item>
+                            </md-list>
+                        </sb-item-body>
+                    </sb-item>
+                    <sb-item *ngIf="engines[3].enabled">
+                        <sb-item-head><span style="color: #3f51b5 !important">GettyImages Image search options</span></sb-item-head>
+                        <sb-item-body>
+                            <md-list>
+                                <md-list-item>
+                                    <md-select placeholder="Select an orientation" style="width: 100%">
+                                        <md-option *ngFor="let orientation of gettyImagesOrientations" [value]="orientation"> {{ orientation.name }} </md-option>
+                                    </md-select>
+                                </md-list-item>
+                            </md-list>
+                        </sb-item-body>
+                    </sb-item>
+                </squeezebox>
+                <!--<label class="accordion"><em>+</em> Additional image search options</label>-->
+                <button style="margin-top: 11px; width: 100%" color="primary" md-raised-button [disabled]="!hasEngines()" (click)="submit()">Send query <md-icon>send</md-icon></button>
+                <button id="prev-submit" style="margin-top: 5px; width: 100%" color="accent" md-raised-button [disabled]="!hasCachedSearchResults()" (click)="prevSubmit()"><md-icon>undo</md-icon> Previous search results</button>
+            </form>
+        </div>
+        <div class="fluid unmerged">
+            <md-tab-group class="container" [selectedIndex]="0">
+                <md-tab label="Web">
+                    <div *ngFor="let item of searchResults | contentitemfilter: 0" (click)="setSelectedItem(item)">
+                        <contentitem [item]="item"></contentitem>
+                    </div>
+                </md-tab>
+                <md-tab label="Images">
+                    <div *ngFor="let item of searchResults | contentitemfilter: 2" (click)="setSelectedItem(item)">
+                        <contentitem [item]="item"></contentitem>
+                    </div>
+                </md-tab>
+                <md-tab label="Videos">
+                    <div *ngFor="let item of searchResults | contentitemfilter: 1" (click)="setSelectedItem(item)">
+                        <contentitem [item]="item"></contentitem>
+                    </div>
+                </md-tab>
+            </md-tab-group>
+        </div>
+        <div class="fluid unmerged">
+            <div class="container">
+                <h1 style="width: 100%; border-bottom: 1px solid #aaa;">Result set
+                    <questionable answer="This container is used to store all content items from the search results which are wished to be used for writing the article. Drag a search result to this container to use that content item when writing the article. You can drag the content items from this container onto the article window when this window is minimalized."></questionable>
+                </h1>
+                <button style="position: relative; top: -73px; float: right" color="accent" md-raised-button disabled>undo <md-icon>undo</md-icon></button>
+
+                <div style="cursor: pointer;" class="col-xs-12 result" *ngFor="let item of items; let i = index" (click)="setSelectedItem(item)"
+                    [ngSwitch]="item.type">
+                    <div *ngSwitchCase="0">
+                        <h4></h4>
+                        <a hreff="item.source" target="_blank">{{item.source}}</a>
+                    </div>
+                    <div *ngSwitchCase="1">
+                        <img class="thumbnail" src="https://i.ytimg.com/vi/mizN8xaA7VQ/hqdefault.jpg" width="320px" height="240px" />
+                    </div>
+                    <div *ngSwitchCase="2">
+                        <img class="thumbnail" [src]="item.source | safe" width="320px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="merged">
+            <md-tab-group class="container" [selectedIndex]="0">
+                <md-tab label="Search results">
+                    <md-tab-group class="container" [selectedIndex]="0">
+                        <md-tab label="Web">
+                            <div *ngFor="let item of searchResults | contentitemfilter: 0" >
+                                <contentitem [item]="item" (click)="setSelectedItem(item)"></contentitem>
+                            </div>
+                        </md-tab>
+                        <md-tab label="Images">
+                            <div *ngFor="let item of searchResults | contentitemfilter: 2" (click)="setSelectedItem(item)">
+                                <contentitem [item]="item"></contentitem>
+                            </div>
+                        </md-tab>
+                        <md-tab label="Videos">
+                            <div *ngFor="let item of searchResults | contentitemfilter: 1" (click)="setSelectedItem(item)">
+                                <contentitem [item]="item"></contentitem>
+                            </div>
+                        </md-tab>
+                    </md-tab-group>
+                </md-tab>
+                <md-tab label="Result set">
+                    <div class="container">
+                        <h1 style="width: 100%; border-bottom: 1px solid #aaa;">Result set
+                            <questionable answer="This container is used to store all content items from the search results which are wished to be used for writing the article. Drag a search result to this container to use that content item when writing the article. You can drag the content items from this container onto the article window when this window is minimalized."></questionable>
+                        </h1>
+                        <button style="position: relative; top: -73px; float: right" color="accent" md-raised-button disabled>undo <md-icon>undo</md-icon></button>
+
+                        <div style="cursor: pointer;" *ngFor="let item of items; let i = index" (click)="setSelectedItem(item)" [ngSwitch]="item.type">
+                            <div *ngSwitchCase="0">
+                                <h4>{{item.title}}</h4>
+                                <a hreff="item.source" target="_blank">{{item.source}}</a>
+                                <p>{{item.description}}</p>
+                            </div>
+                            <div *ngSwitchCase="1">
+                                <contentitem [item]="item"></contentitem>
+                            </div>
+                            <div *ngSwitchCase="2">
+                                <contentitem [item]="item"></contentitem>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab>
+            </md-tab-group>
+        </div>
+    </div>
+    <div style="width: 100%;" [ngStyle]="{ display: open ? 'none' : 'inherit' }">
+        <md-tab-group style="width: 100%; height: inherit" [selectedIndex]="0">
+            <md-tab label="Web">
+                <div style="cursor: pointer" *ngFor="let item of items;" (click)="setSelectedItem(item)" [ngSwitch]="item.type">
+                    <div *ngSwitchCase="0">
+                        <h4>{{item.title}}</h4>
+                        <a hreff="item.source" target="_blank">{{item.source}}</a>
+                    </div>
+                </div>
+            </md-tab>
+            <md-tab label="Images">
+                <div style="cursor: pointer" *ngFor="let item of items;" (click)="setSelectedItem(item)" [ngSwitch]="item.type">
+                    <div *ngSwitchCase="2">
+                        <img class="thumbnail" [src]="item.source | safe" width="160px" height="100px" />
+                    </div>
+                </div>
+            </md-tab>
+            <md-tab label="Videos">
+                <div style="cursor: pointer" *ngFor="let item of items;" (click)="setSelectedItem(item)" [ngSwitch]="item.type">
+                    <div *ngSwitchCase="1">
+                        <img class="thumbnail" src="https://i.ytimg.com/vi/mizN8xaA7VQ/hqdefault.jpg" width="160px" height="100px" />
+                    </div>
+                </div>
+            </md-tab>
+        </md-tab-group>
+    </div>
+</div>
+<div class="pull" (touchstart)="startDrag($event)" (mousedown)="startDrag($event)"><i class="material-icons">&#xE25D;</i></div>
+<div *ngIf="searching" class="loader-wrapper">
+    <div class="loader" style="text-align: center">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+        <small *ngIf="ecService.getStatus()" style="position: relative; top: 5px; color: #2636a5; opacity: 0.6; font-weight: bold">{{ecService.getStatus()}}</small>
+    </div>
+</div>
